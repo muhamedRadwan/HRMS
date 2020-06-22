@@ -45,14 +45,20 @@ class GetMenu
         }else{
             $role = 'guest';
         }
-        //session(['prime_user_role' => $role]);
-        $menus = new GetSidebarMenu();
-        $menulists = Menulist::all();
-        $result = array();
-        foreach($menulists as $menulist){
-            $result[ $menulist->name ] = $menus->get( $role, $menulist->id );
+        if(session("role", false) == $role && session("menues")){
+            view()->share('appMenus', session("menues") );
+        }else{
+            //session(['prime_user_role' => $role]);
+            $menus = new GetSidebarMenu();
+            $menulists = Menulist::all();
+            $result = array();
+            foreach($menulists as $menulist){
+                $result[ $menulist->name ] = $menus->get( $role, $menulist->id );
+            }
+            session(["menues" => $result, "role" => $role ]);
+            view()->share('appMenus', $result );
         }
-        view()->share('appMenus', $result );
+       
         return $next($request);
     }
 }
