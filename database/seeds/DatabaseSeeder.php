@@ -15,5 +15,12 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesTableSeeder::class);
         $this->call(ConnectRelationshipsSeeder::class);
         // $this->call(UserSeeder::class);
+        $this->call('UsersAndNotesSeeder');
+        $this->call('FolderTableSeeder');
+        $this->call('ExampleSeeder');
+        $this->call('BREADSeeder');
+        $this->call('EmailSeeder');
+        $this->call('MenusTableSeeder');
+
     }
 }

@@ -37,4 +37,12 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    /**
+     * Get the notes for the users.
+     */
+    public function notes()
+    {
+        return $this->hasMany('App\Models\Notes');
+    }
 }
