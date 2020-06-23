@@ -37,7 +37,7 @@
             echo '<tr>';
             echo '<td>';
             if($data['hasIcon'] === true && $data['iconType'] === 'coreui'){
-                echo '<svg class="c-nav-icon edit-menu-icon"><use xlink:href="/assets/icons/coreui/free-symbol-defs.svg#' . $data['icon'] . '"></use></svg>';    
+                // echo '<svg class="c-nav-icon edit-menu-icon"><use xlink:href="/assets/icons/coreui/free-symbol-defs.svg#' . $data['icon'] . '"></use></svg>';    
                 echo '<i class="' . $data['icon'] . '"></i>';
             }
             echo '</td>';
@@ -122,9 +122,9 @@
                             <td>
                                 @if($menuel['hasIcon'] === true)
                                     @if($menuel['iconType'] === 'coreui')
-                                    <svg class="c-nav-icon edit-menu-icon">
+                                    {{-- <svg class="c-nav-icon edit-menu-icon">
                                         <use xlink:href="/assets/icons/coreui/free-symbol-defs.svg#{{ $menuel['icon'] }}"></use>
-                                    </svg> 
+                                    </svg>  --}}
                                     <i class="{{ $menuel['icon'] }}"></i> 
                                     @endif
                                 @endif 
@@ -168,9 +168,9 @@
                             <td>
                                 @if($menuel['hasIcon'] === true)
                                     @if($menuel['iconType'] === 'coreui')
-                                        <svg class="c-nav-icon edit-menu-icon">
+                                        {{-- <svg class="c-nav-icon edit-menu-icon">
                                             <use xlink:href="/assets/icons/coreui/free-symbol-defs.svg#{{ $menuel['icon'] }}"></use>
-                                        </svg> 
+                                        </svg>  --}}
                                         <i class="{{ $menuel['icon'] }}"></i> 
                                     @endif
                                 @endif 

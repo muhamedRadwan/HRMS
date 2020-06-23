@@ -33,7 +33,7 @@ class UsersAndNotesSeeder extends Seeder
         //     'role_id' => $userRole->id,
         //     'hierarchy' => 2,
         // ]);
-        $guestRole = Role::create(['name' => 'guest', "slug" => 'guest']); 
+        // $guestRole = Role::create(['name' => 'guest', "slug" => 'guest']); 
         // RoleHierarchy::create([
         //     'role_id' => $guestRole->id,
         //     'hierarchy' => 3,
@@ -70,6 +70,7 @@ class UsersAndNotesSeeder extends Seeder
         ]);
         $user->attachRole(1);
         $user->attachRole(2);
+        $user->attachRole(3);
         for($i = 0; $i<$numberOfUsers; $i++){
             $user = User::create([ 
                 'name' => $faker->name(),
@@ -78,7 +79,7 @@ class UsersAndNotesSeeder extends Seeder
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
                 'remember_token' => Str::random(10),
             ]);
-            $user->attachRole(2);
+            $user->attachRole(3);
             array_push($usersIds, $user->id);
         }
         /*  insert notes  */

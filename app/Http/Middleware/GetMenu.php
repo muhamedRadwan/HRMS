@@ -24,7 +24,7 @@ class GetMenu
         if (Auth::check()){
             $role = 'guest';
             //$role =  Auth::user()->menuroles;
-            $role = Role::where('level', Auth::user()->level())->select("slug")->first()->slug;
+            $role = Auth::user()->roles()->select("slug")->pluck('slug')->toArray();//Role::where('level', Auth::user()->level())->select("slug")->first()->slug;
             // //$userRoles = $userRoles['items'];
             // $roleHierarchy = RoleHierarchy::select('role_hierarchy.role_id', 'roles.name')
             // ->join('roles', 'roles.id', '=', 'role_hierarchy.role_id')
@@ -45,9 +45,9 @@ class GetMenu
         }else{
             $role = 'guest';
         }
-        if(session("role", false) == $role && session("menues")){
-            view()->share('appMenus', session("menues") );
-        }else{
+        // if(session("role", false) == $role && session("menues")){
+        //     view()->share('appMenus', session("menues") );
+        // }else{
             //session(['prime_user_role' => $role]);
             $menus = new GetSidebarMenu();
             $menulists = Menulist::all();
@@ -57,7 +57,7 @@ class GetMenu
             }
             session(["menues" => $result, "role" => $role ]);
             view()->share('appMenus', $result );
-        }
+        // }
        
         return $next($request);
     }

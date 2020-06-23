@@ -20,10 +20,10 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::group(['middleware' => ['get.menu']], function () {
-    Route::get('/', function () {return view('dashboard.homepage'); 
+    Route::get('/', 'HomeController@index');
 });
-});
-Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['role:user','get.menu']], function () {
     Route::get('/colors', function () {     return view('dashboard.colors'); });
@@ -83,10 +83,11 @@ Route::resource('resource/{table}/resource', 'ResourceController')->names([
     'destroy'   => 'resource.destroy'
 ]);
 
+Route::resource('attendance', 'AttendanceController');
+
 Route::group(['middleware' => ['role:admin', 'get.menu']], function () {
     Route::resource('bread',  'BreadController');   //create BREAD (resource)
     Route::resource('users',        'UsersController')->except( ['create', 'store'] );
-    Route::resource('roles',        'RolesController');
     Route::resource('mail',        'MailController');
     Route::get('prepareSend/{id}',        'MailController@prepareSend')->name('prepareSend');
     Route::post('mailSend/{id}',        'MailController@send')->name('mailSend');
@@ -128,4 +129,31 @@ Route::group(['middleware' => ['role:admin', 'get.menu']], function () {
         Route::post('/file/cropp',      'MediaController@cropp');
         Route::get('/file/copy',        'MediaController@fileCopy')->name('media.file.copy');
     });
+});
+
+Route::group([
+    'middleware'    => ['web', 'get.menu'],
+    'as'            => 'laravelroles::',
+    'namespace'     => '\jeremykenedy\LaravelRoles\App\Http\Controllers',
+], function () {
+
+    // Dashboards and CRUD Routes
+    Route::resource('roles', 'LaravelRolesController');
+    Route::resource('permissions', 'LaravelPermissionsController');
+
+    // Deleted Roles Dashboard and CRUD Routes
+    Route::get('roles-deleted', 'LaravelRolesDeletedController@index')->name('roles-deleted');
+    Route::get('role-deleted/{id}', 'LaravelRolesDeletedController@show')->name('role-show-deleted');
+    Route::put('role-restore/{id}', 'LaravelRolesDeletedController@restoreRole')->name('role-restore');
+    Route::post('roles-deleted-restore-all', 'LaravelRolesDeletedController@restoreAllDeletedRoles')->name('roles-deleted-restore-all');
+    Route::delete('roles-deleted-destroy-all', 'LaravelRolesDeletedController@destroyAllDeletedRoles')->name('destroy-all-deleted-roles');
+    Route::delete('role-destroy/{id}', 'LaravelRolesDeletedController@destroy')->name('role-item-destroy');
+
+    // Deleted Permissions Dashboard and CRUD Routes
+    Route::get('permissions-deleted', 'LaravelpermissionsDeletedController@index')->name('permissions-deleted');
+    Route::get('permission-deleted/{id}', 'LaravelpermissionsDeletedController@show')->name('permission-show-deleted');
+    Route::put('permission-restore/{id}', 'LaravelpermissionsDeletedController@restorePermission')->name('permission-restore');
+    Route::post('permissions-deleted-restore-all', 'LaravelpermissionsDeletedController@restoreAllDeletedPermissions')->name('permissions-deleted-restore-all');
+    Route::delete('permissions-deleted-destroy-all', 'LaravelpermissionsDeletedController@destroyAllDeletedPermissions')->name('destroy-all-deleted-permissions');
+    Route::delete('permission-destroy/{id}', 'LaravelpermissionsDeletedController@destroy')->name('permission-item-destroy');
 });

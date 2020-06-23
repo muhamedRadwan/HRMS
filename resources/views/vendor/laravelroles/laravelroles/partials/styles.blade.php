@@ -148,7 +148,7 @@
         content: "\f067";
     }
     .list-group-item table {
-        font-size: .5em;
+        font-size: .7em;
         width: 100%;
         display: table;
         table-layout: fixed;
