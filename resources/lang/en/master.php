@@ -12,6 +12,7 @@ return [
     |
     */
 
-    'register_attendance_now' => 'سجل الان حضورك'
+    'register_attendance_now' => 'سجل الان حضورك',
+    
 
 ];

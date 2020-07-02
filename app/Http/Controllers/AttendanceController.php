@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
 use App\DataTables\UsersDataTable;
+use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 
 class AttendanceController extends Controller
 {
@@ -49,15 +51,16 @@ class AttendanceController extends Controller
     public function store($token, Request $request)
     {
         $user = User::where("token", $token)->firstOrFail();
-        $attendance = Attendance::where('user_id', $user->id)->whereDate('created_at', Carbonn::today())->first();
+        $attendance = Attendance::where('user_id', $user->id)
+        ->whereRaw('date(created_at) = date(\'' . Carbon::today() . '\')')->first();
         if($attendance){
-            Session::flash('message', __("you_already_attended")); 
+            Session::flash('message', __("master.you_already_attended")); 
+        }else{
+            $attendance = Attendance::create(["user_id" => $user->id]);
+            Session::flash('message', __("master.you_successfully_attend")); 
+            Session::flash('alert-class', 'success'); 
         }
-        $attendance = Attendance::create(["user_id" => $user->id]);
-        Session::flash('message', __("you_successfully_attend")); 
-        Session::flash('alert-class', 'success'); 
-
-        return view("dashboard.homepage", compact('attendance'));
+        return redirect()->route("home");
     }
 
     /**

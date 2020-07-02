@@ -10,7 +10,6 @@ class Attendance extends Model
     use SoftDeletes;
     //
     protected $fillable = ["user_id"];
-    protected $dateFormat = 'Y-m-d';
     protected $casts = ['created_at'  => 'date:Y-m-d'];
 
     public function User(){

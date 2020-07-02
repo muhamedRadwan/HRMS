@@ -83,14 +83,14 @@ Route::resource('resource/{table}/resource', 'ResourceController')->names([
     'update'    => 'resource.update',
     'destroy'   => 'resource.destroy'
 ]);
-Route::group(['middleware' => ['role:teacher']], function(){
+Route::group(['middleware' => ['role:user']], function(){
     Route::get('attendance/create/{token}', 'AttendanceController@store')->name("attendance.store");
 
 });
 
 Route::group(['middleware' => ['role:admin,super.admin', 'get.menu']], function () {
     Route::resource('bread',  'BreadController');   //create BREAD (resource)
-    Route::resource('users',        'UsersController')->except( ['create', 'store'] );
+    Route::resource('users',        'UsersController');
     Route::resource('attendance',        'AttendanceController')->except( ['create', 'store'] );
     Route::resource('mail',        'MailController');
     Route::get('prepareSend/{id}',        'MailController@prepareSend')->name('prepareSend');

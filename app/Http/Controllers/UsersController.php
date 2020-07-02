@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\DataTables\UsersDataTable;
+use App\Notifications\UserCreated;
+use Illuminate\Support\Facades\Hash;
+use jeremykenedy\LaravelRoles\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
+use Yajra\DataTables\Html\Button;
+
 // use Datatables;
 class UsersController extends Controller
 {
@@ -43,14 +48,60 @@ class UsersController extends Controller
         ];
 
         // $id_Column = ['title' => __("Id"), 'data' => 'id', 'name'=> 'users.id'];
-
-        $columns = [[ 'title' => __("name"), 'data'=> 'name'], [ 'title' => __("created_at"), 'data'=> 'created_at'],
-         $roles_column];
-        $dataTable = new UsersDataTable($columns, $query);
+        $buttons[] = Button::make('create');
+        $columns = [[ 'title' => __("name"), 'data'=> 'name'], 
+                [ 'title' => __("email"), 'data'=> 'email'],
+                [ 'title' => __("created_at"), 'data'=> 'created_at'],
+                $roles_column];
+        $dataTable = new UsersDataTable($columns, $query,  $buttons);
         
         return $dataTable->render('dashboard.admin.usersList');
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $roles = Role::all();
+        return view('dashboard.admin.create', compact('roles'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->request->add(['token' => str_random(16)]);
+        $validatedData = $request->validate([
+            'name'       => 'required|min:1|max:128',
+            'email'      => 'required|email|unique:users,email',
+            'token'      => 'required|unique:users,token'
+        ]);
+        $password = str_random(8);
+        $fields = $request->except(['id', 'roles']);
+        $password_hash = Hash::make($password);
+        $fields['password'] = $password_hash;
+       
+        $user = new User();
+        foreach ($fields as $key => $value) {
+            if( substr($key, 0, 1) != '_')
+                $user[$key] = $value;
+        }
+        $user->save();
+        $user->syncRoles($request->input('roles'));
+        $user->password = $password;
+        $user->notify(new UserCreated);
+        $request->session()->flash('message', 'User Created Successfuly');
+        $request->session()->flash('alert-class', 'success');
+        return  redirect()->route('users.index');
+    }
+    
     /**
      * Display the specified resource.
      *
