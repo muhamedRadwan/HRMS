@@ -23,7 +23,7 @@
             </button>
           </li>
         </ul>
-        @role(Auth::check())
+        @if(Auth::check())
         <ul class="c-header-nav">
           <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link">
               <svg class="c-icon">
@@ -77,7 +77,7 @@
             </div>
           </li>
         </ul>
-        @endrole
+        @endif
         <div class="c-subheader px-3">
           <ol class="breadcrumb border-0 m-0">
             <li class="breadcrumb-item"><a href="/">Home</a></li>

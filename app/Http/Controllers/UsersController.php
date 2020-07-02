@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-
+use App\DataTables\UsersDataTable;
+use Yajra\DataTables\Facades\DataTables;
+// use Datatables;
 class UsersController extends Controller
 {
 
@@ -26,9 +28,27 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $you = auth()->user();
-        $users = User::all();
-        return view('dashboard.admin.usersList', compact('users', 'you'));
+
+        $query = User::query()->with("roles");
+        $roles_column = [
+            'name' => 'roles.name',
+            'data' => 'roles',
+            'title' =>  __("role"),
+            'searchable' => true,
+            'orderable' => false,
+            'render' => '[, ].name',
+            'footer' => __("role"),
+            'exportable' => true,
+            'printable' => true,
+        ];
+
+        // $id_Column = ['title' => __("Id"), 'data' => 'id', 'name'=> 'users.id'];
+
+        $columns = [[ 'title' => __("name"), 'data'=> 'name'], [ 'title' => __("created_at"), 'data'=> 'created_at'],
+         $roles_column];
+        $dataTable = new UsersDataTable($columns, $query);
+        
+        return $dataTable->render('dashboard.admin.usersList');
     }
 
     /**

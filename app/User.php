@@ -45,4 +45,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Models\Notes');
     }
+
+    /**
+     * Get the notes for the users.
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('jeremykenedy\LaravelRoles\Models\Role');
+    }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use App\DataTables\UsersDataTable;
+
 
 class UsersController extends Controller
 {
@@ -23,11 +25,10 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(UsersDataTable $dataTable)
     {
-        $you = auth()->user();
-        $users = User::all();
-        return view('dashboard.admin.usersList', compact('users', 'you'));
+        $users = User::with('roles')->all();
+        return $dataTable->query($users)->render('dashboard.admin.usersList');
     }
 
     /**
@@ -59,6 +60,12 @@ class UsersController extends Controller
 
     public function edit(){
 
+    }
+
+    public function techaerReportindex(UsersDataTable $dataTable)
+    {
+        // $users = User::join(.'role', )
+        return $dataTable->query()->render('dashboard.reports.teachers-attends');
     }
 
 }

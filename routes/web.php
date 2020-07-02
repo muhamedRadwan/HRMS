@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,7 @@ Route::group(['middleware' => ['get.menu']], function () {
     Route::get('/', 'HomeController@index');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('get.menu');
 
 Route::group(['middleware' => ['role:user','get.menu']], function () {
     Route::get('/colors', function () {     return view('dashboard.colors'); });
@@ -82,12 +83,15 @@ Route::resource('resource/{table}/resource', 'ResourceController')->names([
     'update'    => 'resource.update',
     'destroy'   => 'resource.destroy'
 ]);
+Route::group(['middleware' => ['role:teacher']], function(){
+    Route::get('attendance/create/{token}', 'AttendanceController@store')->name("attendance.store");
 
-Route::resource('attendance', 'AttendanceController');
+});
 
-Route::group(['middleware' => ['role:admin', 'get.menu']], function () {
+Route::group(['middleware' => ['role:admin,super.admin', 'get.menu']], function () {
     Route::resource('bread',  'BreadController');   //create BREAD (resource)
     Route::resource('users',        'UsersController')->except( ['create', 'store'] );
+    Route::resource('attendance',        'AttendanceController')->except( ['create', 'store'] );
     Route::resource('mail',        'MailController');
     Route::get('prepareSend/{id}',        'MailController@prepareSend')->name('prepareSend');
     Route::post('mailSend/{id}',        'MailController@send')->name('mailSend');
@@ -129,6 +133,9 @@ Route::group(['middleware' => ['role:admin', 'get.menu']], function () {
         Route::post('/file/cropp',      'MediaController@cropp');
         Route::get('/file/copy',        'MediaController@fileCopy')->name('media.file.copy');
     });
+
+    // Repors
+    Route::get('/teachers-attendance', 'Admin\UsersController@techaerReportindex');
 });
 
 Route::group([

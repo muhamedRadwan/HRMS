@@ -7,7 +7,7 @@
 * Licensed under MIT (https://coreui.io/license)
 -->
 
-<html lang="en" dir="rtl">
+<html lang="en" dir="">
   <head>
     <base href="./">
     <meta charset="utf-8">
@@ -39,6 +39,7 @@
     <link href="{{ asset('css/flag-icon.min.css') }}" rel="stylesheet"> <!-- icons -->
     <!-- Main styles for this application-->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     @yield('css')
 
@@ -71,8 +72,8 @@
 
       <div class="c-body">
 
-        <main class="c-main">
-
+        <main class="c-main" id="app">
+          @include('flash-messages')
           @yield('content') 
 
         </main>
@@ -83,9 +84,14 @@
 
 
     <!-- CoreUI and necessary plugins-->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/coreui.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/coreui-utils.js') }}"></script>
+    <script src="{!! asset('js/app.js') !!}" ></script>
+    <script src="{{ asset('js/coreui.bundle.min.js') }}" ></script>
+    <script src="{{ asset('js/coreui-utils.js') }}" ></script>
+    
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
+    <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script> --}}
+    <script src="/vendor/datatables/buttons.server-side.js"></script>
+
     @yield('javascript')
 
 

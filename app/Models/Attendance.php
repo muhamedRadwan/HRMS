@@ -1,15 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class create_attendance_table extends Model
+class Attendance extends Model
 {
     use SoftDeletes;
     //
     protected $fillable = ["user_id"];
+    protected $dateFormat = 'Y-m-d';
+    protected $casts = ['created_at'  => 'date:Y-m-d'];
 
     public function User(){
         return $this->belongsTo('App\User', 'user_id', 'id');

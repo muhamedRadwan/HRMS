@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\attendace;
+use App\Models\Attendance;
 use Illuminate\Http\Request;
+use App\DataTables\UsersDataTable;
+use Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
@@ -14,7 +16,18 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        //
+
+        $query = Attendance::query()
+        ->join("users","attendances.user_id", "users.id")
+        ->select("attendances.created_at", "attendances.id", "users.name");
+        $roles_column = [
+            'name' => 'users.name',
+            'data' => 'name',
+            'title' => __('teacher_name'),
+        ];
+        $columns = [ $roles_column, [ 'title' => __("created_at"), 'data'=> 'created_at']];
+        $dataTable = new UsersDataTable($columns, $query);
+        return $dataTable->render('dashboard.models.attendance.index');
     }
 
     /**
@@ -33,9 +46,18 @@ class AttendanceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($token, Request $request)
     {
-        //
+        $user = User::where("token", $token)->firstOrFail();
+        $attendance = Attendance::where('user_id', $user->id)->whereDate('created_at', Carbonn::today())->first();
+        if($attendance){
+            Session::flash('message', __("you_already_attended")); 
+        }
+        $attendance = Attendance::create(["user_id" => $user->id]);
+        Session::flash('message', __("you_successfully_attend")); 
+        Session::flash('alert-class', 'success'); 
+
+        return view("dashboard.homepage", compact('attendance'));
     }
 
     /**
