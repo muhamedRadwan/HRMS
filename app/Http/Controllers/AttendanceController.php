@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\DataTables\UsersDataTable;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class AttendanceController extends Controller
@@ -25,10 +26,12 @@ class AttendanceController extends Controller
         $roles_column = [
             'name' => 'users.name',
             'data' => 'name',
-            'title' => __('teacher_name'),
+            'title' => __('master.teacher_name'),
         ];
-        $columns = [ $roles_column, [ 'title' => __("created_at"), 'data'=> 'created_at']];
-        $dataTable = new UsersDataTable($columns, $query);
+
+        $columns = [ $roles_column, [ 'title' => __("master.created_at"), 'data'=> 'created_at']];
+        $arrayOfActions = ["delete"];
+        $dataTable = new UsersDataTable($columns, $query,[], 'attendance', $arrayOfActions );
         return $dataTable->render('dashboard.models.attendance.index');
     }
 
@@ -66,10 +69,10 @@ class AttendanceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\create_attendance_table  $create_attendance_table
+     * @param  \App\Attendance  $Attendance
      * @return \Illuminate\Http\Response
      */
-    public function show(create_attendance_table $create_attendance_table)
+    public function show(Attendance $Attendance)
     {
         //
     }
@@ -77,10 +80,10 @@ class AttendanceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\create_attendance_table  $create_attendance_table
+     * @param  \App\Attendance  $Attendance
      * @return \Illuminate\Http\Response
      */
-    public function edit(create_attendance_table $create_attendance_table)
+    public function edit(Attendance $Attendance)
     {
         //
     }
@@ -89,10 +92,10 @@ class AttendanceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\create_attendance_table  $create_attendance_table
+     * @param  \App\Attendance  $Attendance
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, create_attendance_table $create_attendance_table)
+    public function update(Request $request, Attendance $Attendance)
     {
         //
     }
@@ -100,11 +103,14 @@ class AttendanceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\create_attendance_table  $create_attendance_table
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(create_attendance_table $create_attendance_table)
+    public function destroy(Request $request)
     {
         //
+        if(Auth::user()->hasRole(["super.admin","admin"]))
+            Attendance::where('id', $request->id)->firstOrFail()->delete();
+        
     }
 }

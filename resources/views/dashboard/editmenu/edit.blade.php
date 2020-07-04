@@ -55,19 +55,19 @@
                                                 <?php
                                                     $temp = false;
                                                     foreach($menuroles as $menurole){
-                                                        if($role == $menurole->role_name){
+                                                        if($role->slug == $menurole->role_name){
                                                             $temp = true;
                                                         }
                                                     }
                                                     if($temp === true){
-                                                        echo '<input checked type="checkbox" name="role[]" value="' . $role . '" class="form-control"/>';
+                                                        echo '<input checked type="checkbox" name="role[]" value="' . $role->slug . '" class="form-control"/>';
                                                     }else{
-                                                        echo '<input type="checkbox" name="role[]" value="' . $role . '" class="form-control"/>';
+                                                        echo '<input type="checkbox" name="role[]" value="' . $role->slug . '" class="form-control"/>';
                                                     }
                                                 ?>
                                             </td>
                                             <td>
-                                                {{ $role }}
+                                                {{ $role->name }}
                                             </td>
                                         </tr>
                                     @endforeach

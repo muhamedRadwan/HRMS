@@ -7,14 +7,15 @@
 * Licensed under MIT (https://coreui.io/license)
 -->
 
-<html lang="en" dir="">
+<html lang="ar" dir="rtl">
   <head>
     <base href="./">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
-    <meta name="author" content="Łukasz Holeczek">
+    <meta name="author" content="Mohamed Radwan">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
     <title>CoreUI Free Bootstrap Admin Template</title>
     <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
@@ -95,7 +96,32 @@
     @yield('javascript')
 
 
+    {{-- <script>
+      (function ($, DataTable) {
 
+      // Datatable global configuration
+      $.extend(true, $.fn.dataTable.defaults, {
+          Language: {
+            "url" :'/js/arabic.json'
+          }
+      });
+
+      })(jQuery, jQuery.fn.dataTable);
+    </script> --}}
 
   </body>
+  <script>
+   function deleteRecord(mech_id,row_index) {
+      // confirm then
+      $.post(window.location.href,{
+        _method: 'DELETE',
+        _token:  $('meta[name="csrf-token"]').attr('content'),
+        id: mech_id,
+        dataType: 'application/json'
+      }).done(function (data) {
+        row_index.parentNode.parentNode.remove();
+        // window.LaravelDataTables["users-table"].rows("#users-table tr.active"))
+      });
+    }
+  </script>
 </html>

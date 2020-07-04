@@ -26,17 +26,17 @@
                                       </svg>
                                     </span>
                                 </div>
-                                <input class="form-control" type="text" placeholder="{{ __('laravelroles.roles-table.Name') }}" name="name" value="{{ old("name") }}" required autofocus>
+                                <input class="form-control" type="text" placeholder="{{ __('laravelroles::laravelroles.roles-table.name') }}" name="name" value="{{ old("name") }}" required autofocus>
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">@</span>
                                 </div>
-                                <input class="form-control" type="text" placeholder="{{ __('E-Mail Address') }}" name="email" value="{{ old("email") }}" required>
+                                <input class="form-control" type="text" placeholder="{{ __('laravelroles::laravelroles.roles-table.user-email') }}" name="email" value="{{ old("email") }}" required>
                             </div>
                             <div class="form-group has-feedback row col-12">
                                 <label for="roles" class="col-12 control-label">
-                                    {{ trans("master.Roles") }}
+                                    {{ trans("master.roles") }}
                                 </label>
                                 <div class="col-12">
                                     <select name="roles[]" id="roles" multiple>
@@ -46,8 +46,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <button class="btn btn-block btn-success" type="submit">{{ __('master.Save') }}</button>
-                            <a href="{{ route('users.index') }}" class="btn btn-block btn-primary">{{ __('master.Return') }}</a> 
+                            <button class="btn btn-block btn-success" type="submit">{{ __('master.save') }}</button>
+                            <a href="{{ route('users.index') }}" class="btn btn-block btn-primary">{{ __('master.return') }}</a> 
                         </form>
                     </div>
                 </div>

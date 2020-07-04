@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use jeremykenedy\LaravelRoles\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 use Yajra\DataTables\Html\Button;
-
+use QrCode;
 // use Datatables;
 class UsersController extends Controller
 {
@@ -38,7 +38,7 @@ class UsersController extends Controller
         $roles_column = [
             'name' => 'roles.name',
             'data' => 'roles',
-            'title' =>  __("role"),
+            'title' =>  __("master.role"),
             'searchable' => true,
             'orderable' => false,
             'render' => '[, ].name',
@@ -48,12 +48,13 @@ class UsersController extends Controller
         ];
 
         // $id_Column = ['title' => __("Id"), 'data' => 'id', 'name'=> 'users.id'];
-        $buttons[] = Button::make('create');
-        $columns = [[ 'title' => __("name"), 'data'=> 'name'], 
-                [ 'title' => __("email"), 'data'=> 'email'],
-                [ 'title' => __("created_at"), 'data'=> 'created_at'],
+        $buttons[] = Button::make('create')->name(__("master.create"));
+        $actionColumn = [];
+        $columns = [[ 'title' => __("master.name"), 'data'=> 'name'], 
+                [ 'title' => __("master.email"), 'data'=> 'email'],
+                [ 'title' => __("master.created_at"), 'data'=> 'created_at'],
                 $roles_column];
-        $dataTable = new UsersDataTable($columns, $query,  $buttons);
+        $dataTable = new UsersDataTable($columns, $query,  $buttons, "users");
         
         return $dataTable->render('dashboard.admin.usersList');
     }
@@ -83,11 +84,15 @@ class UsersController extends Controller
             'email'      => 'required|email|unique:users,email',
             'token'      => 'required|unique:users,token'
         ]);
+
         $password = str_random(8);
         $fields = $request->except(['id', 'roles']);
         $password_hash = Hash::make($password);
         $fields['password'] = $password_hash;
-       
+
+        // \Storage::disk('public')
+        // ->put('test.png',base64_decode(QrCode::getBarcodePNG($request->token, "PDF417")));
+
         $user = new User();
         foreach ($fields as $key => $value) {
             if( substr($key, 0, 1) != '_')
@@ -97,6 +102,9 @@ class UsersController extends Controller
         $user->syncRoles($request->input('roles'));
         $user->password = $password;
         $user->notify(new UserCreated);
+        QrCode::size(500)
+        ->format('svg')
+        ->generate('HDTuto.com', public_path("qrcodes/$user->token.svg"));
         $request->session()->flash('message', 'User Created Successfuly');
         $request->session()->flash('alert-class', 'success');
         return  redirect()->route('users.index');
@@ -111,7 +119,9 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return view('dashboard.admin.userShow', compact( 'user' ));
+        $userRoles = $user->getRoles()->pluck("name")->toArray();
+        $userRoles = implode(',', $userRoles);
+        return view('dashboard.admin.userShow', compact( 'user', 'userRoles'));
     }
 
     /**
@@ -123,7 +133,9 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('dashboard.admin.userEditForm', compact('user'));
+        $roles = Role::all();
+        $userRoles = $user->getRoles()->pluck("id")->toArray();
+        return view('dashboard.admin.userEditForm', compact( 'user', 'roles', 'userRoles'));
     }
 
     /**
@@ -143,6 +155,10 @@ class UsersController extends Controller
         $user->name       = $request->input('name');
         $user->email      = $request->input('email');
         $user->save();
+        $user->syncRoles($request->input('roles'));
+        QrCode::size(250)
+        ->format('svg')
+        ->generate(route("attendance.guestAttendance", $user->token), public_path("qrcodes/$user->token.svg"));
         $request->session()->flash('message', 'Successfully updated user');
         return redirect()->route('users.index');
     }
@@ -153,12 +169,12 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $user = User::find($id);
+        $user = User::find($request->id);
         if($user){
             $user->delete();
         }
-        return redirect()->route('users.index');
+        // return redirect()->route('users.index');
     }
 }

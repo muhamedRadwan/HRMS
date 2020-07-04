@@ -10,8 +10,17 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
+
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.5/flatly/bootstrap.min.css" rel="stylesheet">
+	<link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	<link href="css/style.css" rel="stylesheet">
+	<!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -19,9 +28,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('style')
 </head>
 <body>
-    <div id="app">
+    <div id="">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -73,9 +83,21 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <div class="container">
             @yield('content')
-        </main>
+        </div>
     </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+	 <script type="text/javascript">
+      $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+    </script>
+@yield('scripts')
+
 </body>
 </html>

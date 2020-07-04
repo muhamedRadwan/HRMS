@@ -6407,7 +6407,7 @@ $.extend( true, DataTable.defaults, {
 
 /* Default class modification */
 $.extend( DataTable.ext.classes, {
-	sWrapper:      "dataTables_wrapper dt-bootstrap4",
+	sWrapper:      "dataTables_wrapper dt-bootstrap4 table-responsive ",
 	sFilterInput:  "form-control form-control-sm",
 	sLengthSelect: "custom-select custom-select-sm form-control form-control-sm",
 	sProcessing:   "dataTables_processing card",
@@ -20491,7 +20491,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 			 *    } );
 			 */
 			"sZeroRecords": "No matching records found"
-		},
+    },
+    
 	
 	
 		/**

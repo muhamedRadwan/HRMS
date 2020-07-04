@@ -10,6 +10,7 @@ use App\Models\Menulist;
 use App\Models\Menus;
 use Illuminate\Validation\Rule;
 use App\Services\RolesService;
+use jeremykenedy\LaravelRoles\Models\Role;
 
 class MenuElementController extends Controller
 {
@@ -144,10 +145,10 @@ class MenuElementController extends Controller
     }
 
     public function edit(Request $request){
-
+        // dd(RolesService::get());
 
         return view('dashboard.editmenu.edit',[
-            'roles'    => RolesService::get(),
+            'roles'    => Role::get(),
             'menulist' => Menulist::all(),
             'menuElement' => Menus::where('id', '=', $request->input('id'))->first(),
             'menuroles' => Menurole::where('menus_id', '=', $request->input('id'))->get()

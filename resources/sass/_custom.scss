@@ -8,3 +8,11 @@
 .click-file{
     cursor:pointer;
 }
+
+*[dir="rtl"] .dropdown-menu{
+    right: 82px;
+    left: none;
+  }
+  .users-table_wrapper>.dt-buttons{
+    float: left;
+  }

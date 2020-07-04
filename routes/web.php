@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('attendance/guest/{token}',  'AttendanceController@store')->name("attendance.guestAttendance");
+Route::get('qrcodescan/',  
+function(){return view('auth.qrcodeScan');}
+);
 
 Auth::routes(['verify' => true]);
 
@@ -85,13 +89,15 @@ Route::resource('resource/{table}/resource', 'ResourceController')->names([
 ]);
 Route::group(['middleware' => ['role:user']], function(){
     Route::get('attendance/create/{token}', 'AttendanceController@store')->name("attendance.store");
-
 });
 
 Route::group(['middleware' => ['role:admin,super.admin', 'get.menu']], function () {
     Route::resource('bread',  'BreadController');   //create BREAD (resource)
     Route::resource('users',        'UsersController');
+    Route::delete('users/',        'UsersController@destroy');
     Route::resource('attendance',        'AttendanceController')->except( ['create', 'store'] );
+    Route::delete('attendance/',        'AttendanceController@destroy');
+
     Route::resource('mail',        'MailController');
     Route::get('prepareSend/{id}',        'MailController@prepareSend')->name('prepareSend');
     Route::post('mailSend/{id}',        'MailController@send')->name('mailSend');

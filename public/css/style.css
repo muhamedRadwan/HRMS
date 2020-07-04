@@ -7849,7 +7849,7 @@ html:not([dir="rtl"])
 }
 
 .c-header-nav .dropdown-item {
-  min-width: 180px;
+  min-width: 125px;
 }
 
 .c-header.c-header-dark {
@@ -20408,6 +20408,17 @@ body {
 *[dir="rtl"] {
   direction: rtl;
   unicode-bidi: embed;
+}
+*[dir="rtl"] .dropdown-menu{
+  left: 186px;
+  right: 8px;
+}
+*[dir="rtl"] .dt-button-collection .dropdown-menu{
+  left: 186px;
+  right: unset;
+}
+.dataTables_wrapper>.dt-buttons{
+  float: left;
 }
 
 *[dir="rtl"] body {

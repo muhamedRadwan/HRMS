@@ -25,9 +25,14 @@ return [
     'you_already_attended' => 'لقد تم تسجيل حضورك مسبقاً اليوم',
     'you_successfully_attend' => 'تم تسجيل حضورك بنجاح',
     'teacher_name' => 'اسم المعلم',
-    'Roles' => 'الوظائف',
+    'roles' => 'الوظائف',
     'select_roles' => 'اخترالوظائف',
-    'Return' => 'العودة',
-    'Save' => 'حفظ',
-    'your_are_registred' => 'لقد تم تسجيل حضورك'
+    'return' => 'العودة',
+    'save' => 'حفظ',
+    'your_are_registred' => 'لقد تم تسجيل حضورك',
+    'userQrCode' => '(QRCode)رمز الاستجابة السريعة',
+    'id' => 'الرقم التعريفي',
+    'actions' => 'صلاحيات',
+    'email' => 'البريد الالكتروني',
+    'role' => 'الوظيفة'
 ];
