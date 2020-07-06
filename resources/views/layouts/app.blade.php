@@ -15,19 +15,18 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
 
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.5/flatly/bootstrap.min.css" rel="stylesheet">
 	<link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-	<link href="css/style.css" rel="stylesheet">
+	<link href="/css/style.css" rel="stylesheet">
 	<!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    <link href="{{url("/css/bootstrap-rtl.css")}}" rel="stylesheet">
     @yield('style')
 </head>
 <body>
@@ -42,9 +41,9 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
+                     <!-- Left Side Of Navbar -->
+                     <ul class="navbar-nav mr-auto">
+                        @stack("nav-items")
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -60,6 +59,9 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('home') }}">{{ __('master.dashboard') }}</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -83,10 +85,19 @@
             </div>
         </nav>
 
-        <div class="container">
+        <div class="container"  style="min-height: 100vh;">
             @yield('content')
         </div>
+
+        <!-- Footer -->
+        <footer class="py-5 bg-dark">
+            <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; <a href="Rad-apps.com">Rad-apps.com</a> 2020</p>
+            </div>
+            <!-- /.container -->
+        </footer>
     </div>
+    
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>

@@ -32,4 +32,3 @@ $factory->state(\App\User::class, 'admin', function (Faker $faker) {
         'menuroles' => 'user,admin',
     ];
 });
-

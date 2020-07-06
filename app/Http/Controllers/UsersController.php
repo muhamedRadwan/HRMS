@@ -105,7 +105,7 @@ class UsersController extends Controller
         QrCode::size(500)
         ->format('svg')
         ->generate('HDTuto.com', public_path("qrcodes/$user->token.svg"));
-        $request->session()->flash('message', 'User Created Successfuly');
+        $request->session()->flash('message', __('master.edited_successfully'));
         $request->session()->flash('alert-class', 'success');
         return  redirect()->route('users.index');
     }
@@ -159,7 +159,9 @@ class UsersController extends Controller
         QrCode::size(250)
         ->format('svg')
         ->generate(route("attendance.guestAttendance", $user->token), public_path("qrcodes/$user->token.svg"));
-        $request->session()->flash('message', 'Successfully updated user');
+        $request->session()->flash('message', __('master.edited_successfuly'));
+        $request->session()->flash('alert-class', 'success');
+
         return redirect()->route('users.index');
     }
 

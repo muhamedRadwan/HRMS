@@ -10,20 +10,20 @@
                 FreelyPositionedMenus::render( $appMenus['top menu'] , 'c-header-', 'd-md-down-none');
             }
         ?>  
+        @role('super.admin')
         <ul class="c-header-nav mfs-auto">
           <li class="c-header-nav-item px-3 c-d-legacy-none">
             <button class="c-class-toggler c-header-nav-btn" type="button" id="header-tooltip" data-target="body" data-class="c-dark-theme" data-toggle="c-tooltip" data-placement="bottom" title="" data-original-title="Toggle Light/Dark Mode" style="
                 color: red;">
-              <svg class="c-icon c-d-dark-none">
+              {{-- <svg class="c-icon c-d-dark-none">
               <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-moon"></use>
               </svg>
               <svg class="c-icon c-d-default-none">
               <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-sun"></use>
-              </svg>
+              </svg> --}}
             </button>
           </li>
         </ul>
-        @if(Auth::check())
         <ul class="c-header-nav">
           <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link">
               <svg class="c-icon">
@@ -77,7 +77,17 @@
             </div>
           </li>
         </ul>
-        @endif
+        @else
+        <ul class="c-header-nav mfs-auto">
+          <li class="c-header-nav-item dropdown">
+            <svg class="c-icon mr-2">
+              <use xlink:href="{{ env('APP_URL', '') }}/icons/sprites/free.svg#cil-account-logout"></use>
+            </svg>
+            <form action="/logout" method="POST"> @csrf <button type="submit" class="btn btn-ghost-dark btn-block">Logout</button>
+            </form></a>
+          </li>
+        </ul>
+        @endrole
         <div class="c-subheader px-3">
           <ol class="breadcrumb border-0 m-0">
             <li class="breadcrumb-item"><a href="/">Home</a></li>

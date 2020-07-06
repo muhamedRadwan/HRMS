@@ -182,9 +182,6 @@ return [
         jeremykenedy\LaravelRoles\RolesServiceProvider::class,
         // Milon\Barcode\BarcodeServiceProvider::class,
         // SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
-
-
-
     ],
 
     /*

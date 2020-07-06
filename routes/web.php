@@ -23,12 +23,11 @@ function(){return view('auth.qrcodeScan');}
 );
 
 Auth::routes(['verify' => true]);
+Route::get('/', 'HomeController@index');
+Route::get('/posts/view/{post}', 'HomeController@show')->name("post-view");
 
-Route::group(['middleware' => ['get.menu']], function () {
-    Route::get('/', 'HomeController@index');
-});
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('get.menu');
+Route::get('/home', 'HomeController@dashboard')->name('home')->middleware('get.menu');
 
 Route::group(['middleware' => ['role:user','get.menu']], function () {
     Route::get('/colors', function () {     return view('dashboard.colors'); });
@@ -37,6 +36,9 @@ Route::group(['middleware' => ['role:user','get.menu']], function () {
     Route::get('/widgets', function () {    return view('dashboard.widgets'); });
     Route::get('/404', function () {        return view('dashboard.404'); });
     Route::get('/500', function () {        return view('dashboard.500'); });
+    Route::get('/qrcode', 'HomeController@showQrcode');
+
+    
     Route::prefix('base')->group(function () {  
         Route::get('/breadcrumb', function(){   return view('dashboard.base.breadcrumb'); });
         Route::get('/cards', function(){        return view('dashboard.base.cards'); });
@@ -97,6 +99,8 @@ Route::group(['middleware' => ['role:admin,super.admin', 'get.menu']], function 
     Route::delete('users/',        'UsersController@destroy');
     Route::resource('attendance',        'AttendanceController')->except( ['create', 'store'] );
     Route::delete('attendance/',        'AttendanceController@destroy');
+    Route::resource('posts',        'PostController');
+    Route::delete('posts/',        'PostController@destroy');
 
     Route::resource('mail',        'MailController');
     Route::get('prepareSend/{id}',        'MailController@prepareSend')->name('prepareSend');

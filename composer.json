@@ -17,6 +17,8 @@
         "laravel/telescope": "^3.5",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
+        "milon/barcode": "^7.0",
+        "simplesoftwareio/simple-qrcode": "^3.0",
         "spatie/laravel-medialibrary": "^7.19.0",
         "yajra/laravel-datatables": "^1.5"
     },

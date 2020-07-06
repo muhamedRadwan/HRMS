@@ -17,12 +17,15 @@ class AttendanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
         $query = Attendance::query()
         ->join("users","attendances.user_id", "users.id")
         ->select("attendances.created_at", "attendances.id", "users.name");
+        if($request->from_date){
+            $query->whereRaw('date(attendances.created_at) between date(\'' .$request->from_date . '\') and  date(\'' .$request->to_date . '\')');
+        }
         $roles_column = [
             'name' => 'users.name',
             'data' => 'name',
