@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\LivingRequest;
+use App\Models\LeaveRequest;
 use Faker\Generator as Faker;
 
-$factory->define(LivingRequest::class, function (Faker $faker) {
+$factory->define(LeaveRequest::class, function (Faker $faker) {
     return [
         //
     ];

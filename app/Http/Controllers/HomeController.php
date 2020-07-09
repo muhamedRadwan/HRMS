@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\LeaveRequest;
 use App\Models\Post;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use stdClass;
 
 class HomeController extends Controller
 {
@@ -32,7 +35,24 @@ class HomeController extends Controller
             return redirect()->route('login');
         }
         if($user->hasRole(['admin', 'super.admin'])){
-            return view('dashboard.homepage-admin');
+            $attendance = new stdClass();
+            $attendance->today = Attendance::today()->count();
+            $attendance->month = 118 *31 ;//Attendance::month()->count();
+            $daysInMonth = Carbon::now()->daysInMonth;
+            $allTeacher = User::allTeacher()->count();
+            $attendance->precentage_today  =   100 - (($allTeacher -  ($attendance->today) ) / $allTeacher * 100);
+            $allTeacherInMonth = $allTeacher * $daysInMonth; // Number Of Attendance
+            $attendance->precentage_month  =   100 - (($allTeacherInMonth -  ($attendance->month) ) / $allTeacherInMonth * 100);
+            
+            $LeaveRequest = new stdClass();
+            $LeaveRequest->approved = LeaveRequest::month()->approved()->count();
+            $LeaveRequest->notApproved = LeaveRequest::month()->notApproved()->count();
+            $LeaveRequestTotal = LeaveRequest::month()->count();
+            $LeaveRequest->precentage_approved  =   100 - (($LeaveRequestTotal -  ($LeaveRequest->approved) ) / $LeaveRequestTotal * 100);
+            $LeaveRequest->precentage_notApproved  =   100 - (($LeaveRequestTotal -  ($LeaveRequest->notApproved) ) / $LeaveRequestTotal * 100);
+
+                
+            return view('dashboard.homepage-admin', compact('attendance', 'LeaveRequest'));
         }
         else if($user->hasRole(['user'])){
              $attendance = Attendance::where('user_id', $user->id)

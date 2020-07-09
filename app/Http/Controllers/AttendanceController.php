@@ -8,6 +8,7 @@ use App\DataTables\UsersDataTable;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class AttendanceController extends Controller
@@ -116,4 +117,7 @@ class AttendanceController extends Controller
             Attendance::where('id', $request->id)->firstOrFail()->delete();
         
     }
+
+    // Json Chart 
+
 }

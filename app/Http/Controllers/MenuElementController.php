@@ -88,7 +88,7 @@ class MenuElementController extends Controller
 
     public function create(){
         return view('dashboard.editmenu.create',[
-            'roles'    => RolesService::get(),
+            'roles'    => Role::get(),
             'menulist' => Menulist::all(),
         ]);
     }

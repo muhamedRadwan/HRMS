@@ -56,4 +56,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany('jeremykenedy\LaravelRoles\Models\Role');
     }
+
+    public function  scopeAllTeacher($query){
+        return $query->join("role_user", "user_id", "users.id")
+                    ->join("roles", "role_id", "roles.id")
+                    ->where('roles.slug', 'user');
+        
+
+    }
 }

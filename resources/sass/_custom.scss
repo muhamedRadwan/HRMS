@@ -16,3 +16,8 @@
   .users-table_wrapper>.dt-buttons{
     float: left;
   }
+
+  *[dir="rtl"] .btn-group > .btn:not(:first-child),
+  *[dir="rtl"] .btn-group > .btn-group:not(:first-child) {
+  margin-left: -1px;
+}

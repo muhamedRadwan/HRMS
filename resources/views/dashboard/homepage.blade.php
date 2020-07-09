@@ -41,19 +41,22 @@
                 
                 <!-- /.col-->
                 <div class="col-sm-6 col-lg-6">
-                  <div class="card text-white bg-info">
-                    <div class="card-body">
-                      <div class="text-muted text-right mb-4">
-                        <svg class="c-icon c-icon-2xl">
-                          <use xlink:href="assets/icons/coreui/free-symbol-defs.svg#cui-people"></use>
-                        </svg>
-                      </div>
-                      <div class="text-value-lg">87.500</div><small class="text-muted text-uppercase font-weight-bold">Techaers Today</small>
-                      <div class="progress progress-white progress-xs mt-3">
-                        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                  <form action="{{route('leaverequests.store')}}" method="POST"> @csrf 
+                    <div class="card text-white bg-danger">
+                      <div class="card-body text-center">
+                        <button type="submit" class="btn-danger b-a-0" onclick="return confirm('{{__('master.are_you_sure_you_want_send_leave_request')}}')">
+                          <div class="text-center mb-4">
+                            <svg class="c-icon c-icon-2xl">
+                              <use xlink:href="assets/icons/coreui/free-symbol-defs.svg#cui-envelope-letter"></use>
+                            </svg>
+                          </div>
+                          <div class="text-center text-value-lg">
+                            <h2>@lang('master.make_leave_request')</h2>
+                          </div>
+                        </button>
                       </div>
                     </div>
-                  </div>
+                </form>
                 </div>
               </div>
               <!-- /.row-->

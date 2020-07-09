@@ -93,12 +93,19 @@ Route::group(['middleware' => ['role:user']], function(){
     Route::get('attendance/create/{token}', 'AttendanceController@store')->name("attendance.store");
 });
 
+Route::group(['middleware' => ['auth',  'get.menu']], function(){
+    Route::resource('leaverequests',        'LeaveRequestController');
+    Route::delete('leaverequests/',        'LeaveRequestController@destroy');
+
+});
+
 Route::group(['middleware' => ['role:admin,super.admin', 'get.menu']], function () {
     Route::resource('bread',  'BreadController');   //create BREAD (resource)
     Route::resource('users',        'UsersController');
     Route::delete('users/',        'UsersController@destroy');
     Route::resource('attendance',        'AttendanceController')->except( ['create', 'store'] );
     Route::delete('attendance/',        'AttendanceController@destroy');
+    Route::get('mainchart/',        'ChartsController@getAttendance');
     Route::resource('posts',        'PostController');
     Route::delete('posts/',        'PostController@destroy');
 

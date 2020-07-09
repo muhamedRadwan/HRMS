@@ -4306,6 +4306,12 @@ input[type="button"].btn-block {
   margin-left: -1px;
 }
 
+*[dir="rtl"] .btn-group > .btn:not(:first-child),
+*[dir="rtl"] .btn-group > .btn-group:not(:first-child) {
+margin-right: -1px;
+margin-left: 0px;
+}
+
 .btn-group > .btn:not(:last-child):not(.dropdown-toggle),
 .btn-group > .btn-group:not(:last-child) > .btn {
   border-top-right-radius: 0;
@@ -5933,7 +5939,6 @@ input[type="button"].btn-block {
   position: relative;
   display: block;
   padding: 0.5rem 0.75rem;
-  margin-left: -1px;
   line-height: 1.25;
   color: #3490dc;
   background-color: #fff;

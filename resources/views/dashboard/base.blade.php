@@ -27,9 +27,9 @@
     <link href="{{ asset('css/free.min.css') }}" rel="stylesheet"> <!-- icons -->
     <link href="{{ asset('css/flag.min.css') }}" rel="stylesheet"> <!-- icons -->
     <!-- Main styles for this application-->
+    <link href="{{ asset('css/coreui-chartjs.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/coreui-chartjs.css') }}" rel="stylesheet">
     @yield('css')
 
   </head>
@@ -84,16 +84,19 @@
   </body>
   <script>
    function deleteRecord(mech_id,row_index) {
-      // confirm then
-      $.post(window.location.href,{
-        _method: 'DELETE',
-        _token:  $('meta[name="csrf-token"]').attr('content'),
-        id: mech_id,
-        dataType: 'application/json'
-      }).done(function (data) {
-        row_index.parentNode.parentNode.remove();
-        // window.LaravelDataTables["users-table"].rows("#users-table tr.active"))
-      });
+     if(confirm('{{__("master.are_you_sure")}}')){
+        // confirm then
+        $.post(window.location.href,{
+                _method: 'DELETE',
+                _token:  $('meta[name="csrf-token"]').attr('content'),
+                id: mech_id,
+                dataType: 'application/json'
+        }).done(function (data) {
+          row_index.parentNode.parentNode.remove();
+          // window.LaravelDataTables["users-table"].rows("#users-table tr.active"))
+        });
+     }
+     
     }
   </script>
 </html>

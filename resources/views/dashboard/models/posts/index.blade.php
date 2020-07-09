@@ -9,7 +9,7 @@
           <div class="container-fluid">
             <div class="fade-in">
               <div class="card">
-                  <div class="card-header"> DataTables
+                  <div class="card-header"> {{__("master.posts")}}
                     <div class="card-header-actions">
                       
                     </div>

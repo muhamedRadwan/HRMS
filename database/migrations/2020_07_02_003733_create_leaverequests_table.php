@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLivingrequestsTable extends Migration
+class CreateLeaverequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateLivingrequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('livingrequests', function (Blueprint $table) {
+        Schema::create('leave_requests', function (Blueprint $table) {
             $table->id();
-            $table->date('approved_in');
-            $table->unsignedBigInteger("approver_id");
+            $table->date('approved_at')->nullable();
+            $table->unsignedBigInteger("approver_id")->nullable();
             $table->foreign("approver_id")->references("id")->on("users")->delete("cascade");
             $table->unsignedBigInteger("creator_id");
             $table->foreign("creator_id")->references("id")->on("users")->delete("cascade");
@@ -33,6 +33,6 @@ class CreateLivingrequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('livingrequests');
+        Schema::dropIfExists('leaverequests');
     }
 }

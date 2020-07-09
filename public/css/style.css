@@ -10035,6 +10035,7 @@ html:not([dir="rtl"]) .page-link {
 
 *[dir="rtl"] .page-link {
   margin-right: -1px;
+  
 }
 
 .page-link:hover {
@@ -20547,3 +20548,16 @@ body {
   cursor: pointer;
 }
 
+
+*[dir="rtl"] .c-chartjs-tooltip 
+.c-tooltip-body-item-color{
+  margin-left: 0.875rem;
+  margin-right: 0;
+
+}
+*[dir="rtl"]  .c-chartjs-tooltip .c-tooltip-body-item-value{
+  padding-right: 1rem;
+  margin-right: auto;
+  padding-left: unset;
+  margin-left: unset;
+}

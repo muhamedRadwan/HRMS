@@ -45,10 +45,10 @@ class GetMenu
         }else{
             $role = 'guest';
         }
-        // if(session("role", false) == $role && session("menues")){
-        //     view()->share('appMenus', session("menues") );
-        // }else{
-            //session(['prime_user_role' => $role]);
+        if(session("role", false) == $role && session("menues")){
+            view()->share('appMenus', session("menues") );
+        }else{
+            session(['prime_user_role' => $role]);
             $menus = new GetSidebarMenu();
             $menulists = Menulist::all();
             $result = array();
@@ -57,7 +57,7 @@ class GetMenu
             }
             session(["menues" => $result, "role" => $role ]);
             view()->share('appMenus', $result );
-        // }
+        }
        
         return $next($request);
     }
