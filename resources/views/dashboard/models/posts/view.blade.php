@@ -76,7 +76,7 @@
                   @endphp
                   @foreach ($firsthalf as $post)
                     <li>
-                      <a href="{{route('posts.show', $post["id"])}}">{{$post["title"]}}</a>
+                      <a href="{{route('post-view', $post["id"])}}">{{$post["title"]}}</a>
                     </li>
                   @endforeach
                 </ul>
@@ -85,7 +85,7 @@
                 <ul class="list-unstyled mb-0">
                   @foreach ($secondhalf as $post)
                     <li>
-                      <a href="{{route('posts.show', $post["id"])}}">{{$post["title"]}}</a>
+                      <a href="{{route('post-view', $post["id"])}}">{{$post["title"]}}</a>
                     </li>
                   @endforeach
                 </ul>

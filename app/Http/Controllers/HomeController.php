@@ -9,6 +9,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use stdClass;
 
 class HomeController extends Controller
@@ -67,7 +68,6 @@ class HomeController extends Controller
         
         $latestposts = Post::orderBy("id", 'desc')->limit(10)->get()->toArray();
         $posts = Post::orderBy("id", 'desc')->paginate();
-
         return view('home', compact('latestposts', 'posts'));
     }
 
