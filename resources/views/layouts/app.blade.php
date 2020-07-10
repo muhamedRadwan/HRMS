@@ -86,6 +86,7 @@
         </nav>
 
         <div class="container"  style="min-height: 100vh;">
+            @include('flash-messages')
             @yield('content')
         </div>
 
