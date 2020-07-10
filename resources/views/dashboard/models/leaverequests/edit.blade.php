@@ -47,7 +47,7 @@
 
                               </div>
                           </div>
-                            <button class="btn btn-block btn-success" type="submit">{{ __('save') }}</button>
+                            <button class="btn btn-block btn-success" type="submit">{{ __('master.save') }}</button>
                             <a href="{{ route('users.index') }}" class="btn btn-block btn-primary">{{ __('master.return') }}</a> 
                         </form>
                     </div>

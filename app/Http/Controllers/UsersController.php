@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\DataTables\UsersDataTable;
 use App\Notifications\UserCreated;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use jeremykenedy\LaravelRoles\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
@@ -178,5 +179,26 @@ class UsersController extends Controller
             $user->delete();
         }
         // return redirect()->route('users.index');
+    }
+
+
+    public function changPassword(Request $request){
+        $validatedData = $request->validate([
+            'current_password'      => 'required',
+            'password'      => 'required|min:8|max:20|confirmed'
+        ]);
+
+        if(Hash::check($request->current_password, Auth::user()->password) ){
+            Auth::user()->password = Hash::make($request->password);
+            Auth::user()->save();
+            $request->session()->flash('message', __('master.edited_successfully'));
+            $request->session()->flash('alert-class', 'success');
+            return redirect()->route('home');
+
+        }else{
+            $request->session()->flash('message', __('master.current_password_not_valid'));
+            $request->session()->flash('alert-class', 'danger');
+            return redirect()->back()->withInput();
+        }
     }
 }

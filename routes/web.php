@@ -19,8 +19,10 @@ Route::get('qrcodescan/',
 function(){return view('auth.qrcodeScan');}
 );
 
-Auth::routes(['verify' => true]);
+Auth::routes(['verify' => true, 'register' => false]);
+
 Route::get('/', 'HomeController@index')->name("home-guest");
+Route::get('/register',  'HomeController@index');
 Route::get('/posts/view/{post}', 'HomeController@show')->name("post-view");
 
 
@@ -75,7 +77,6 @@ Route::group(['middleware' => ['role:user','get.menu']], function () {
     });
     Route::resource('notes', 'NotesController');
 });
-Auth::routes(["verify"=> true]);
 
 Route::resource('resource/{table}/resource', 'ResourceController')->names([
     'index'     => 'resource.index',
@@ -93,6 +94,8 @@ Route::group(['middleware' => ['role:user']], function(){
 Route::group(['middleware' => ['auth',  'get.menu']], function(){
     Route::resource('leaverequests',        'LeaveRequestController');
     Route::delete('leaverequests/',        'LeaveRequestController@destroy');
+    Route::view('change-password', "dashboard.changePassword")->name("change-password");
+    Route::PUT('change-password', "UsersController@changPassword")->name("change-password.change");
 
 });
 

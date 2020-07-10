@@ -80,6 +80,14 @@ return [
     'attendance_today' => 'حضور المدرسين اليوم',
     'leave_requests_approved' => 'طلبات استئذان تم قبولها هذا الشهر',
     'leave_requests_notApproved' => 'طلبات استئذان لم يتم قبولها هذا الشهر',
-    'chart' => 'مخطط'
-
+    'chart' => 'مخطط',
+    'login' => 'تسجيل الدخول',
+    'sign_In_to_your_account' => 'سجل دخولك لحسابك الان',
+    'change-password' => 'تغيير كلمة المرور',
+    'password' => 'كلمة المرور',
+    'forgot_your_password' => 'نسيت كلمة المرور',
+    'current_password' => 'كلمة المرور الحاليه',
+    'new_password' => 'كلمة المرور الجديدة',
+    'password_confirmation' => 'تأكيد كلمة المرور',
+    'current_password_not_valid' => 'كلمة المرور الحالية غير صحيحة'
 ];

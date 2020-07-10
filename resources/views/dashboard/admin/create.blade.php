@@ -32,7 +32,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">@</span>
                                 </div>
-                                <input class="form-control" type="text" placeholder="{{ __('laravelroles::laravelroles.roles-table.user-email') }}" name="email" value="{{ old("email") }}" required>
+                                <input class="form-control" type="text" placeholder="{{ __('laravelroles::laravelroles.cards.role-card.user-email') }}" name="email" value="{{ old("email") }}" required>
                             </div>
                             <div class="form-group has-feedback row col-12">
                                 <label for="roles" class="col-12 control-label">

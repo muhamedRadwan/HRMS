@@ -54,13 +54,16 @@
                 <svg class="c-icon mr-2">
                   <use xlink:href="{{ env('APP_URL', '') }}/icons/sprites/free.svg#cil-comment-square"></use>
                 </svg> Comments<span class="badge badge-warning ml-auto">42</span></a>
-              <div class="dropdown-header bg-light py-2"><strong>Settings</strong></div><a class="dropdown-item" href="#">
-                <svg class="c-icon mr-2">
-                  <use xlink:href="{{ env('APP_URL', '') }}/icons/sprites/free.svg#cil-user"></use>
-                </svg> Profile</a><a class="dropdown-item" href="#">
+              <div class="dropdown-header bg-light py-2"><strong>Settings</strong></div>
+                <a class="dropdown-item" href="#">
+                  <svg class="c-icon mr-2">
+                    <use xlink:href="{{ env('APP_URL', '') }}/icons/sprites/free.svg#cil-user"></use>
+                  </svg> Profile
+                </a><a class="dropdown-item" href="#">
                 <svg class="c-icon mr-2">
                   <use xlink:href="{{ env('APP_URL', '') }}/icons/sprites/free.svg#cil-settings"></use>
-                </svg> Settings</a><a class="dropdown-item" href="#">
+                </svg> Settings</a>
+                <a class="dropdown-item" href="#">
                 <svg class="c-icon mr-2">
                   <use xlink:href="{{ env('APP_URL', '') }}/icons/sprites/free.svg#cil-credit-card"></use>
                 </svg> Payments<span class="badge badge-secondary ml-auto">42</span></a><a class="dropdown-item" href="#">
@@ -70,7 +73,10 @@
               <div class="dropdown-divider"></div><a class="dropdown-item" href="#">
                 <svg class="c-icon mr-2">
                   <use xlink:href="{{ env('APP_URL', '') }}/icons/sprites/free.svg#cil-lock-locked"></use>
-                </svg> Lock Account</a><a class="dropdown-item" href="#">
+                </svg> Lock Account</a>
+                <a class="dropdown-item" href="{{route("change-password")}}">
+                  {{__("master.change-password")}}
+                </a>
                 <svg class="c-icon mr-2">
                   <use xlink:href="{{ env('APP_URL', '') }}/icons/sprites/free.svg#cil-account-logout"></use>
                 </svg><form action="/logout" method="POST"> @csrf <button type="submit" class="btn btn-ghost-dark btn-block">Logout</button></form></a>
@@ -80,11 +86,15 @@
         @else
         <ul class="c-header-nav mfs-auto">
           <li class="c-header-nav-item dropdown">
-            <svg class="c-icon mr-2">
-              <use xlink:href="{{ env('APP_URL', '') }}/icons/sprites/free.svg#cil-account-logout"></use>
-            </svg>
+            <a class="dropdown-item" href="{{route("change-password")}}">
+              {{__("master.change-password")}}
+            </a>
+          </li>
+          <li class="c-header-nav-item dropdown">
+            <a class="dropdown-item">
             <form action="/logout" method="POST"> @csrf <button type="submit" class="btn btn-ghost-dark btn-block">Logout</button>
-            </form></a>
+            </form>
+            </a>
           </li>
         </ul>
         @endrole
