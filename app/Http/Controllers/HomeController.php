@@ -38,7 +38,7 @@ class HomeController extends Controller
         if($user->hasRole(['admin', 'super.admin'])){
             $attendance = new stdClass();
             $attendance->today = Attendance::today()->count();
-            $attendance->month = 118 *31 ;//Attendance::month()->count();
+            $attendance->month = Attendance::month()->count();
             $daysInMonth = Carbon::now()->daysInMonth;
             $allTeacher = User::allTeacher()->count();
             $attendance->precentage_today  =   100 - (($allTeacher -  ($attendance->today) ) / $allTeacher * 100);
