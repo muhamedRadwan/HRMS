@@ -14,16 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::get('attendance/guest/{token}',  'AttendanceController@store')->name("attendance.guestAttendance");
 Route::get('qrcodescan/',  
 function(){return view('auth.qrcodeScan');}
 );
 
 Auth::routes(['verify' => true]);
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name("home-guest");
 Route::get('/posts/view/{post}', 'HomeController@show')->name("post-view");
 
 

@@ -67,7 +67,7 @@ class AttendanceController extends Controller
             Session::flash('message', __("master.you_successfully_attend")); 
             Session::flash('alert-class', 'success'); 
         }
-        return redirect()->route("home");
+        return redirect()->route("home-guest");
     }
 
     /**
