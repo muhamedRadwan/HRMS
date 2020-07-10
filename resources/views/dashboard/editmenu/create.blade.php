@@ -50,7 +50,7 @@
                                                 <input type="checkbox" name="role[]" value="{{ $role->slug }}" class="form-control"/>
                                             </td>
                                             <td>
-                                                {{ $role }}
+                                                {{ $role->name }}
                                             </td>
                                         </tr>
                                     @endforeach
