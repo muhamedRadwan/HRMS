@@ -281,7 +281,7 @@ const mainChart = new Chart(document.getElementById('main-chart'), {
   }
 });
 
-$.get("https://hrms.test/mainchart", function(data){
+$.get("/mainchart", function(data){
   mainChart.data.labels = [];
   mainChart.data.datasets[0].data = [];
   data.Attendance.forEach(month => {
