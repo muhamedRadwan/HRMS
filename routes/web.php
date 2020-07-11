@@ -105,7 +105,7 @@ Route::group(['middleware' => ['role:admin,super.admin', 'get.menu']], function 
     Route::delete('users/',        'UsersController@destroy');
     Route::resource('attendance',        'AttendanceController')->except( ['create', 'store'] );
     Route::delete('attendance/',        'AttendanceController@destroy');
-    Route::get('mainchart/',        'ChartsController@getAttendance');
+    Route::get('mainchart/',        'ChartsController@getMainChart');
     Route::resource('posts',        'PostController');
     Route::delete('posts/',        'PostController@destroy');
 
