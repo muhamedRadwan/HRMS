@@ -32,7 +32,7 @@ if(!function_exists('renderDropdown')){
 
       <div class="c-sidebar-brand">
         <img class="c-sidebar-brand-full" src="{{ env('APP_URL', '') }}/assets/brand/logo.jpg" alt="{{env("APP_NAME", "Rad-apps")}}">
-      <img class="c-sidebar-brand-minimized" src="assets/brand/assets/brand/logo.jpg"alt="{{env("APP_NAME", "Rad-apps")}}"></div>
+      <img class="c-sidebar-brand-minimized" src="/assets/brand/logo.jpg"alt="{{env("APP_NAME", "Rad-apps")}}"></div>
         <ul class="c-sidebar-nav">
         @if(isset($appMenus['sidebar menu']))
             @foreach($appMenus['sidebar menu'] as $menuel)

@@ -67,26 +67,9 @@
     <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script> --}}
     <script src="/vendor/datatables/buttons.server-side.js"></script>
 
-    @yield('javascript')
-
-
-    {{-- <script>
-      (function ($, DataTable) {
-
-      // Datatable global configuration
-      $.extend(true, $.fn.dataTable.defaults, {
-          Language: {
-            "url" :'/js/arabic.json'
-          }
-      });
-
-      })(jQuery, jQuery.fn.dataTable);
-    </script> --}}
-
-  </body>
   <script>
     moment.locale('{{env("local", "ar")}}');
-   function deleteRecord(mech_id,row_index) {
+    function deleteRecord(mech_id,row_index) {
      if(confirm('{{__("master.are_you_sure")}}')){
         // confirm then
         $.post(window.location.href,{
@@ -102,4 +85,6 @@
      
     }
   </script>
+  @yield('javascript')
+  </body>
 </html>

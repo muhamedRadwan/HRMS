@@ -9,7 +9,7 @@
             <div class="fade-in">
               <div class="row input-daterange form-inline m-2">
                 <label class="form-label">{{__("master.choose_period")}}:</label>
-                <input type="text" name="daterange" class="col-md-4 form-control" value="" />
+                <input type="text"  name="daterange" class="col-md-4 form-control" value="" />
             </div>
               <div class="card">
                   <div class="card-header">{{ __("master.leave_request_report")}}

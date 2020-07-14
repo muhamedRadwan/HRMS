@@ -1,8 +1,8 @@
 @extends('dashboard.base')
 @section('css')
-@if(config('roles.enableSelectizeJsCssCDN'))
-<link rel="stylesheet" type="text/css" href="{{ config('roles.SelectizeJsCssCDN') }}">
-@endif
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+@endsection
 @section('content')
 
         <div class="container-fluid">
@@ -21,15 +21,15 @@
                               <div class="col-md-6">
                                 <div class="input-group mb-3">
                                   <label class="form-label">{{__("master.from")}}</label>
-                                  <input class="form-control" type="time" 
-                                  name="from_time" required value="{{old("from_time")}}" >
+                                  <input type="text"  required name="_from_time" class=" form-control"  value="{{old("from_time")}}"/>
+                                  <input type="hidden"  name="from_time" class=" form-control"   value="{{old("from_time")}}"/>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="input-group mb-3 ">
                                   <label class="form-label">{{__("master.to")}}</label>
-                                  <input class="form-control" type="time" 
-                                   name="to_time" required value="{{old("to_time")}}" >
+                                  <input type="text" required name="_to_time" class="form-control" value="{{old("to_time")}}" />
+                                  <input type="hidden"  name="to_time" class="form-control" value="{{old("to_time")}}" />
                                 </div>
                               </div>
                             </div>
@@ -73,4 +73,42 @@
         });
     }(noConflictMode));
 </script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script>
+        $(function() {
+        $('input[name="_from_time"]').daterangepicker({
+          opens: 'center',
+          autoApply: true,
+          timePicker: true,
+          singleDatePicker: true,
+          autoUpdateInput: false,
+           locale: {
+            format: 'Y-M-D hh:mm A'
+          }
+        }, function(start, end, label) {
+            $('input[name="_from_time"]').val(start.format('YYYY-MM-DD HH:mm:ss A'));
+            moment.locale("en");
+            $("input[name='from_time'").val(moment(start.unix()*1000).format("YYYY-MM-DD HH:mm:ss"));
+            moment.locale("ar");
+        });
+
+        $('input[name="_to_time"]').daterangepicker({
+          opens: 'center',
+          autoApply: true,
+          timePicker: true,
+          singleDatePicker: true,
+          autoUpdateInput: false,
+           locale: {
+            format: 'Y-M-D hh:mm A',
+            cancelLabel: 'Clear'
+          }
+        }, function(start, end, label) {
+            $('input[name="_to_time"]').val(start.format('YYYY-MM-DD HH:mm:ss'));
+            moment.locale("en");
+            $("input[name='to_time'").val(moment(start.unix()*1000).format("YYYY-MM-DD HH:mm:ss"));
+            moment.locale("ar");
+        });
+      });
+      
+    </script>
 @endsection

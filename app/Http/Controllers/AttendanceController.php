@@ -76,7 +76,7 @@ class AttendanceController extends Controller
         if($attendance && $attendance->leave_at){
             Session::flash('message', __("master.you_already_attended")); 
         }
-        else if( $attendance && !$attendance->leave_at){// second Time Leave
+        else if($attendance && !$attendance->leave_at){// second Time Leave
             $attendance->leave_at  = now();
             $attendance->save();
             Session::flash('message', __("master.you_successfully_leave")); 

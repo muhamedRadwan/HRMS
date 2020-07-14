@@ -61,18 +61,19 @@ class LeaveRequestController extends Controller
             else if (this.status == 2) 
                 return `<span class="badge badge-danger">' . __("master.rejected") . '</span>`;
         }'];
-        $from_to_column = ['title' => __("master.time"), 'data'=> 'from_time', 'render' => 
+        $from_time_column = ['title' => __("master.from"), 'data'=> 'from_time', 'render' => 
         'function(){
-                console.log(this.to_time);
-                console.log(this.created_at);
-                console.log(moment(`${this.created_at} ${this.to_time}`).format("[' . __("master.to") . '] hh:mm A"));
                 if(this.from_time && this.to_time)
-                    return   moment(`${this.created_at} ${this.from_time}`).format("[' . __("master.from") . '] hh:mm A") +" "+
-                         moment(`${this.created_at} ${this.to_time}`).format("[' . __("master.to") . '] hh:mm A") ;
+                    return   moment(`${this.from_time}`).format("YYYY-MM-DD hh:mm A") 
                 return "";
         }'];
-        $columns = [ $status_column, $creator_column,$approver_column,$from_to_column,
-         [ 'title' => __("master.created_at"), 'data'=> 'created_at'],
+        $to_time_column = ['title' => __("master.to"), 'data'=> 'to_time', 'render' => 
+        'function(){
+                if(this.from_time && this.to_time)
+                    return   moment(`${this.to_time}`).format("YYYY-MM-DD hh:mm A") ;
+                return "";
+        }'];
+        $columns = [ $status_column, $creator_column,$approver_column,$from_time_column,$to_time_column,
          [ 'title' => __("master.approved_at"), 'data'=> 'approved_at'],
          [ 'title' => __("master.note"), 'data'=> 'note']
          
@@ -100,11 +101,15 @@ class LeaveRequestController extends Controller
      */
     public function store(Request $request)
     {
+        // echo $request->from_time;
+        // dd( date('Y-m-d h:i A', strtotime($request->to_time)));
+        // dd( date($request->to_time));
         
         $validatedData = $request->validate([
-            'from_time'      => 'required|date_format:H:i',
-            'to_time'       => 'required|date_format:H:i',
+            'from_time'      => 'required',
+            'to_time'       => 'required',
         ]);
+        
         if(Auth::user()->hasRole(["user"]))
         {    
             $id = Auth::user()->id;
@@ -112,7 +117,7 @@ class LeaveRequestController extends Controller
             // ->whereRaw('date(created_at) = date(\'' . Carbon::today() . '\')')->first();
             $leaveRequest = LeaveRequest::create([
                 "from_time" => $request->from_time, 
-                "to_time" => $request->to_time, 
+                "to_time" => date($request->to_time), 
                 "note" => $request->note, 
                 "creator_id" => $id]
             );

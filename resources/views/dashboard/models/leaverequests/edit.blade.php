@@ -1,8 +1,7 @@
 @extends('dashboard.base')
 @section('css')
-@if(config('roles.enableSelectizeJsCssCDN'))
-<link rel="stylesheet" type="text/css" href="{{ config('roles.SelectizeJsCssCDN') }}">
-@endif
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+@endsection
 @section('content')
 
         <div class="container-fluid">
@@ -40,15 +39,13 @@
                               <div class="col-md-6">
                                 <div class="input-group mb-3">
                                   <label class="form-label">{{__("master.from")}}</label>
-                                  <input  class="form-control" type="time" 
-                                name="from_time" disabled value="{{$leaverequest->from_time}}" >
+                                  <input type="text"  disabled name="from_time" class=" form-control" value="{{$leaverequest->from_time}}"/>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="input-group mb-3 ">
                                   <label class="form-label">{{__("master.to")}}</label>
-                                  <input class="form-control" type="time" 
-                                   name="to_time" disabled value="{{$leaverequest->to_time}}" >
+                                  <input type="text" disabled  name="to_time" class=" form-control" value="{{$leaverequest->to_time}}"/>
                                 </div>
                               </div>
                             </div>
@@ -85,21 +82,31 @@
 @if(config('roles.enablejQueryCDN'))
         <script type="text/javascript" src="{{ config('roles.JQueryCDN') }}"></script>
 @endif
-@if(config('roles.enableSelectizeJsCDN'))
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
-@endif
-<script type="text/javascript">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<script>
     var noConflictMode = jQuery.noConflict(true);
-    (function ($) {
-        $(document).ready(function () {
-            $("#roles").selectize({
-                placeholder: '{{__('master.select_roles')}}',
-                allowClear: true,
-                create: false,
-                highlight: true,
-                diacritics: true
-            });
-        });
+    (function($) {
+      $('input[name="from_time"]').daterangepicker({
+        opens: 'center',
+        autoApply: true,
+        timePicker: true,
+        singleDatePicker: true,
+          locale: {
+          format: 'Y-M-D hh:mm A',
+        }
+      });
+  
+      $('input[name="to_time"]').daterangepicker({
+        opens: 'center',
+        autoApply: true,
+        timePicker: true,
+        singleDatePicker: true,
+          locale: {
+          format: 'Y-M-D hh:mm A',
+        }
+      });
     }(noConflictMode));
+  
 </script>
 @endsection
