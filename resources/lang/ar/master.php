@@ -99,4 +99,6 @@ return [
     'time' => 'الوقت',
     'you_will_found_attached_file_with_qrcode_for_quick_attendance_and_leave' =>
         'سوف تجد ملف مرفق مع هذا الايميل يحتوي علي رمز لتسجيل حضورك والانصراف سريعاً من عليه.',
+    'register_leave_now' => 'تسجيل الانصراف الان',
+    'you_successfully_leave' => 'تم تسجيل انصرافك بنجاح'
 ];

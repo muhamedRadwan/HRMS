@@ -5,7 +5,7 @@
           <div class="container-fluid">
             <div class="fade-in">
               <div class="row">
-                @if(!$attendance || !$attendance->leave_at)
+                @if(!$attendance)
                   <div class="col-sm-6 col-lg-6">
                     <a href="{{route('attendance.store', Auth::user()->token)}}" class="text-decoration-none">
                       <div class="card text-white bg-info">
@@ -17,6 +17,23 @@
                           </div>
                           <div class="text-center text-value-lg">
                             <h2>@lang('master.register_attendance_now')</h2>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                @elseif(!$attendance->leave_at)
+                  <div class="col-sm-6 col-lg-6">
+                    <a href="{{route('attendance.store', Auth::user()->token)}}" class="text-decoration-none">
+                      <div class="card text-white bg-success">
+                        <div class="card-body">
+                          <div class="text-center mb-4">
+                            <svg class="c-icon c-icon-2xl">
+                              <use xlink:href="assets/icons/coreui/free-symbol-defs.svg#cui-people"></use>
+                            </svg>
+                          </div>
+                          <div class="text-center text-value-lg">
+                            <h2>@lang('master.register_leave_now')</h2>
                           </div>
                         </div>
                       </div>
