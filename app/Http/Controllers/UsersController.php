@@ -103,8 +103,8 @@ class UsersController extends Controller
         $user->syncRoles($request->input('roles'));
         $user->password = $password;
         QrCode::size(500)
-        ->format('svg')
-        ->generate(route("attendance.guestAttendance", $user->token), public_path("qrcodes/$user->token.svg"));
+        ->format('png')
+        ->generate(route("attendance.guestAttendance", $user->token), public_path("qrcodes/$user->token.png"));
         $user->notify(new UserCreated);
         $request->session()->flash('message', __('master.edited_successfully'));
         $request->session()->flash('alert-class', 'success');
@@ -159,9 +159,9 @@ class UsersController extends Controller
         $user->syncRoles($request->input('roles'));
 
         // QrCode::size(250)
-        // ->format('svg')
+        // ->format('png')
         // ->merge('http://hrms.test/assets/brand/logo.jpg', .3, true) // Support only in png formate
-        // ->generate(route("attendance.guestAttendance", $user->token), public_path("qrcodes/$user->token.svg"));
+        // ->generate(route("attendance.guestAttendance", $user->token), public_path("qrcodes/$user->token.png"));
         // $user->notify(new UserCreated);
         
         $request->session()->flash('message', __('master.edited_successfully'));

@@ -48,7 +48,7 @@ class UserCreated extends Notification
                     ->line(__('master.Email_user', ['email' => $notifiable->email] ))
                     ->line(__('master.Passowrd_user', ['password' => $notifiable->password]))
                     ->line(__('master.you_will_found_attached_file_with_qrcode_for_quick_attendance_and_leave'))
-                    ->attach(base_path("public/qrcodes/". $notifiable->token . '.svg'));
+                    ->attach(base_path("public/qrcodes/". $notifiable->token . '.png'));
     }
 
     /**

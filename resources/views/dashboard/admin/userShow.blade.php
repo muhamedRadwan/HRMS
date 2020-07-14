@@ -14,7 +14,7 @@
                         <h4>{{ __('laravelroles::laravelroles.roles-table.name') }} : {{ $user->email }}</h4>
                         <h4> {{ __("master.roles") }} : {{ $userRoles}}</h4>
                         <div class="text-center">
-                          <img class="img" src="{{ url("qrcodes/$user->token.svg")}}" width="250" title="{{__('master.userQrCode')}}" >
+                          <img class="img" src="{{ url("qrcodes/$user->token.png")}}" width="250" title="{{__('master.userQrCode')}}" >
                         </div>
                     </div>
                     <a href="{{ route('users.index') }}" class="btn btn-block btn-primary">{{ __('master.return') }}</a>
