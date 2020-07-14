@@ -9,7 +9,7 @@ class Attendance extends Model
 {
     //
     protected $fillable = ["user_id"];
-    protected $casts = ['created_at'  => 'date:Y-m-d'];
+    protected $casts = ['created_at'];
 
     public function User(){
         return $this->belongsTo('App\User', 'user_id', 'id');

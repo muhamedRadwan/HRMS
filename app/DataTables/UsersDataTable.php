@@ -132,7 +132,7 @@ class UsersDataTable extends DataTable
     {
         if($withDefualt){
             $this->buttons = array_merge($buttons,[
-            Button::make('export')->title("s"),
+            Button::make('export'),
             Button::make('print'),
             Button::make('reset'),
             Button::make('reload')]);

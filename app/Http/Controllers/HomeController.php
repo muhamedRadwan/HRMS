@@ -56,7 +56,7 @@ class HomeController extends Controller
             return view('dashboard.homepage-admin', compact('attendance', 'LeaveRequest'));
         }
         else if($user->hasRole(['user'])){
-             $attendance = Attendance::where('user_id', $user->id)
+             $attendance = Attendance::select("created_at", "leave_at")->where('user_id', $user->id)
                 ->whereRaw('date(created_at) = date(\'' . Carbon::today() . '\')')->first();
             return view('dashboard.homepage', compact('attendance'));
         }

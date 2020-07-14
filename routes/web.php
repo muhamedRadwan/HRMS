@@ -96,7 +96,6 @@ Route::group(['middleware' => ['auth',  'get.menu']], function(){
     Route::delete('leaverequests/',        'LeaveRequestController@destroy');
     Route::view('change-password', "dashboard.changePassword")->name("change-password");
     Route::PUT('change-password', "UsersController@changPassword")->name("change-password.change");
-
 });
 
 Route::group(['middleware' => ['role:admin,super.admin', 'get.menu']], function () {

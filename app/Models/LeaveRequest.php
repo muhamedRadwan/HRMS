@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LeaveRequest extends Model
 {
     //
-    protected $fillable = ["creator_id", "approver_id", "status", "reason", "approved_at"];
+    protected $fillable = ["creator_id", "approver_id", "status", "reason", "approved_at", "from_time" , "to_time", "note"];
     protected $casts = ['created_at'  => 'date:Y-m-d', 'approve_at' => 'date:Y-m-d'];
 
     public function creator(){

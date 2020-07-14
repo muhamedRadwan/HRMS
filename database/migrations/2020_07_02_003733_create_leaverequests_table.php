@@ -16,6 +16,8 @@ class CreateLeaverequestsTable extends Migration
         Schema::create('leave_requests', function (Blueprint $table) {
             $table->id();
             $table->date('approved_at')->nullable();
+            $table->date('from_time')->nullable();
+            $table->date('to_time')->nullable();
             $table->unsignedBigInteger("approver_id")->nullable();
             $table->foreign("approver_id")->references("id")->on("users")->delete("cascade");
             $table->unsignedBigInteger("creator_id");

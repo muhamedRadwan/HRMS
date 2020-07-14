@@ -17,8 +17,8 @@ class CreateAttendanceTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->dateTime("leave_at")->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

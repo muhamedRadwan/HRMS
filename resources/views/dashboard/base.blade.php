@@ -7,7 +7,7 @@
 * Licensed under MIT (https://coreui.io/license)
 -->
 
-<html lang="ar" dir="rtl">
+<html lang="{{env("local", "ar")}}" @if(env("local", "ar") == "ar")  dir="rtl" @else dir="ltr" @endif>
   <head>
     <base href="./">
     <meta charset="utf-8">
@@ -30,6 +30,8 @@
     <link href="{{ asset('css/coreui-chartjs.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+
     @yield('css')
 
   </head>
@@ -83,6 +85,7 @@
 
   </body>
   <script>
+    moment.locale('{{env("local", "ar")}}');
    function deleteRecord(mech_id,row_index) {
      if(confirm('{{__("master.are_you_sure")}}')){
         // confirm then

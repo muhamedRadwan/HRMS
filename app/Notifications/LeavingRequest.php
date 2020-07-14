@@ -11,14 +11,17 @@ class LeavingRequest extends Notification
 {
     use Queueable;
 
+    protected $leaveReuest;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($leaveReuest)
     {
         //
+        $this->leaveReuest = $leaveReuest;
     }
 
     /**
@@ -40,23 +43,25 @@ class LeavingRequest extends Notification
      */
     public function toMail($notifiable)
     {
-        if($notifiable->status == 0) //Notify Admin
+        if($this->leaveReuest->status == 0) //Notify Admin
             return  (new MailMessage)
                         ->subject(__("master.leave_request"))
                         ->greeting(__("master.hello"))
                         ->line(__("master.there_is_new_leaving_request"))
-                        ->action(__("master.see_now"), route("leaverequests.edit", $notifiable->id))
+                        ->action(__("master.see_now"), route("leaverequests.edit", $this->leaveReuest->id))
                         ->line(__("master.thank_you"));
-        else if($notifiable->status == 1) // Aproved
+        else if($this->leaveReuest->status == 1) // Aproved
             return  (new MailMessage)
+                        ->subject(__("master.leave_request"))
                         ->greeting(__("master.hello"))
                         ->line(__("master.your_request_is_approved"))
                         ->action(__("master.see_now"), route("leaverequests.index"))
                         ->line(__("master.thank_you"))
                         ->success();
                         
-        else if($notifiable->status == 2) // Dis Approve
+        else if($this->leaveReuest->status == 2) // Dis Approve
         return  (new MailMessage)
+                    ->subject(__("master.leave_request"))
                     ->greeting(__("master.hello"))
                     ->line(__("master.your_request_is_disapproved"))
                     ->action(__("master.see_now"), route("leaverequests.index"))

@@ -11,7 +11,7 @@
               <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                      <i class="fa fa-align-justify"></i> {{ __('Edit') }}</div>
+                      <i class="fa fa-align-justify"></i> {{ __('master.edit') .' '. __('master.leave_request') }}</div>
                     <div class="card-body">
                         <br>
                         <form method="POST" action="{{route("leaverequests.update", $leaverequest->id)}}">
@@ -35,6 +35,28 @@
                                 <input class="form-control" disabled type="text" 
                                  name="email" value="{{ $leaverequest->creator->email }}" >
                             </div>
+                            <label class="form-label">{{__("master.time")}}</label>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                  <label class="form-label">{{__("master.from")}}</label>
+                                  <input  class="form-control" type="time" 
+                                name="from_time" disabled value="{{$leaverequest->from_time}}" >
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="input-group mb-3 ">
+                                  <label class="form-label">{{__("master.to")}}</label>
+                                  <input class="form-control" type="time" 
+                                   name="to_time" disabled value="{{$leaverequest->to_time}}" >
+                                </div>
+                              </div>
+                            </div>
+                            <label class="form-label">{{__("master.note")}}</label>
+                            <div class="input-group mb-3">
+                              <textarea class="form-control" disabled 
+                            name="note">{{$leaverequest->note}}</textarea>
+                          </div>
                             <div class="form-group has-feedback row col-12">
                               <label for="roles" class="col-12 control-label">
                                   {{ __("master.request_status") }}
@@ -48,7 +70,7 @@
                               </div>
                           </div>
                             <button class="btn btn-block btn-success" type="submit">{{ __('master.save') }}</button>
-                            <a href="{{ route('users.index') }}" class="btn btn-block btn-primary">{{ __('master.return') }}</a> 
+                            <a href="{{ route('leaverequests.index') }}" class="btn btn-block btn-primary">{{ __('master.return') }}</a> 
                         </form>
                     </div>
                 </div>

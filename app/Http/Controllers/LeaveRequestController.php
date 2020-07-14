@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use jeremykenedy\LaravelRoles\Models\Role;
+use Yajra\DataTables\Html\Button;
 
 class LeaveRequestController extends Controller
 {
@@ -23,7 +24,7 @@ class LeaveRequestController extends Controller
      */
     public function index(Request $request)
     {
-
+        $buttons = [];
         $query = LeaveRequest::query()
         ->join("users AS creator", "leave_requests.creator_id", "creator.id")
         ->leftJoin("users AS approver", "leave_requests.approver_id", "approver.id" )
@@ -33,6 +34,7 @@ class LeaveRequestController extends Controller
         }
         if(!Auth::user()->hasRole(["admin", "super.admin"])) // not admin
         {
+            $buttons[] = Button::make('create')->name(__("master.create"));
             $query->where('leave_requests.creator_id', Auth::user()->id);
             $arrayOfActions = [];
 
@@ -59,13 +61,23 @@ class LeaveRequestController extends Controller
             else if (this.status == 2) 
                 return `<span class="badge badge-danger">' . __("master.rejected") . '</span>`;
         }'];
-        $columns = [ $status_column, $creator_column,$approver_column,
+        $from_to_column = ['title' => __("master.time"), 'data'=> 'from_time', 'render' => 
+        'function(){
+                console.log(this.to_time);
+                console.log(this.created_at);
+                console.log(moment(`${this.created_at} ${this.to_time}`).format("[' . __("master.to") . '] hh:mm A"));
+                if(this.from_time && this.to_time)
+                    return   moment(`${this.created_at} ${this.from_time}`).format("[' . __("master.from") . '] hh:mm A") +" "+
+                         moment(`${this.created_at} ${this.to_time}`).format("[' . __("master.to") . '] hh:mm A") ;
+                return "";
+        }'];
+        $columns = [ $status_column, $creator_column,$approver_column,$from_to_column,
          [ 'title' => __("master.created_at"), 'data'=> 'created_at'],
          [ 'title' => __("master.approved_at"), 'data'=> 'approved_at'],
-         [ 'title' => __("master.note"), 'data'=> 'reason']
+         [ 'title' => __("master.note"), 'data'=> 'note']
          
         ];
-        $dataTable = new UsersDataTable($columns, $query,[], 'leaverequests', $arrayOfActions );
+        $dataTable = new UsersDataTable($columns, $query,$buttons, 'leaverequests', $arrayOfActions );
         return $dataTable->render('dashboard.models.leaverequests.index');
     }
 
@@ -77,6 +89,7 @@ class LeaveRequestController extends Controller
     public function create()
     {
         //
+        return view("dashboard.models.leaverequests.create");
     }
 
     /**
@@ -87,20 +100,26 @@ class LeaveRequestController extends Controller
      */
     public function store(Request $request)
     {
-        if(Auth::user()->hasRole(["admin", "super.admin"]))
+        
+        $validatedData = $request->validate([
+            'from_time'      => 'required|date_format:H:i',
+            'to_time'       => 'required|date_format:H:i',
+        ]);
+        if(Auth::user()->hasRole(["user"]))
         {    
             $id = Auth::user()->id;
-            $leaveRequest = LeaveRequest::where('creator_id', $id)
-            ->whereRaw('date(created_at) = date(\'' . Carbon::today() . '\')')->first();
-            if($leaveRequest){
-                Session::flash('message', __("master.you_already_leaving_request")); 
-            }else{
-                $leaveRequest = LeaveRequest::create(["creator_id" => $id]);
-                $users = Role::where("slug", "admin")->first()->users;
-                Notification::send($users, new LeavingRequest($leaveRequest));
-                Session::flash('message', __("master.you_successfully_leaving_request")); 
-                Session::flash('alert-class', 'success'); 
-            }
+            // $leaveRequest = LeaveRequest::where('creator_id', $id)
+            // ->whereRaw('date(created_at) = date(\'' . Carbon::today() . '\')')->first();
+            $leaveRequest = LeaveRequest::create([
+                "from_time" => $request->from_time, 
+                "to_time" => $request->to_time, 
+                "note" => $request->note, 
+                "creator_id" => $id]
+            );
+            $users = Role::where("slug", "admin")->first()->users;
+            Notification::send($users, new LeavingRequest($leaveRequest));
+            Session::flash('message', __("master.you_successfully_leaving_request")); 
+            Session::flash('alert-class', 'success'); 
         }
         return redirect()->route("leaverequests.index");
     }
@@ -148,6 +167,8 @@ class LeaveRequestController extends Controller
             $leaverequest->status = $request->status;
             $leaverequest->save();
             $leaverequest->creator->notify(new LeavingRequest($leaverequest));
+            $request->session()->flash('message', __('master.edited_successfully'));
+            $request->session()->flash('alert-class', 'success');
             return redirect()->route("leaverequests.index");
         }
         return redirect()->route("leaverequests.index");

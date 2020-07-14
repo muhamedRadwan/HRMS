@@ -17,8 +17,8 @@ return [
     'Hello' => 'مرحباً :name,',
     'Congratulations_your_account_created_successfully' => 'تهانينا لقد انشأ حسابك',
     'Login_now' => 'سجل دخولك الان',
-    'Email_user' => 'البريد الالكتروني: :email',
-    'Passowrd_user' => 'كلمة السر: :password',
+    'Email_user' => ' البريد الالكتروني :email',
+    'Passowrd_user' => ' كلمة السر  :password',
     'role', 'الوظيفة',
     'name' => 'الاسم',
     'created_at' => 'سجل في',
@@ -89,5 +89,14 @@ return [
     'current_password' => 'كلمة المرور الحاليه',
     'new_password' => 'كلمة المرور الجديدة',
     'password_confirmation' => 'تأكيد كلمة المرور',
-    'current_password_not_valid' => 'كلمة المرور الحالية غير صحيحة'
+    'current_password_not_valid' => 'كلمة المرور الحالية غير صحيحة',
+    'day' => 'يوم',
+    'hours' => 'ساعه',
+    'leave_at' => 'وقت الانصراف',
+    'choose_hour' => 'اختر الساعه',
+    'to' => 'الي',
+    'from' => 'من',
+    'time' => 'الوقت',
+    'you_will_found_attached_file_with_qrcode_for_quick_attendance_and_leave' =>
+        'سوف تجد ملف مرفق مع هذا الايميل يحتوي علي رمز لتسجيل حضورك والانصراف سريعاً من عليه.',
 ];
