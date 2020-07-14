@@ -86,9 +86,9 @@
             format: 'Y-M-D hh:mm A'
           }
         }, function(start, end, label) {
-            $('input[name="_from_time"]').val(start.format('YYYY-MM-DD HH:mm:ss A'));
+            $('input[name="_from_time"]').val(start.format('YYYY-MM-DD hh:mm:ss A'));
             moment.locale("en");
-            $("input[name='from_time'").val(moment(start.unix()*1000).format("YYYY-MM-DD HH:mm:ss"));
+            $("input[name='from_time'").val(moment(start.unix()*1000).format("YYYY-MM-DD hh:mm:ss"));
             moment.locale("ar");
         });
 
