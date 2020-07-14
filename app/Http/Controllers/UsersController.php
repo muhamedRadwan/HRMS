@@ -102,10 +102,10 @@ class UsersController extends Controller
         $user->save();
         $user->syncRoles($request->input('roles'));
         $user->password = $password;
-        $user->notify(new UserCreated);
         QrCode::size(500)
         ->format('svg')
         ->generate(route("attendance.guestAttendance", $user->token), public_path("qrcodes/$user->token.svg"));
+        $user->notify(new UserCreated);
         $request->session()->flash('message', __('master.edited_successfully'));
         $request->session()->flash('alert-class', 'success');
         return  redirect()->route('users.index');
