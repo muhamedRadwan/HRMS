@@ -104,6 +104,7 @@ class UsersController extends Controller
         $user->password = $password;
         QrCode::size(500)
         ->format('png')
+        ->merge(base_path("public/assets/brand/logo.jpg"), .2, true) // Support only in png formate
         ->generate(route("attendance.guestAttendance", $user->token), public_path("qrcodes/$user->token.png"));
         $user->notify(new UserCreated);
         $request->session()->flash('message', __('master.edited_successfully'));
